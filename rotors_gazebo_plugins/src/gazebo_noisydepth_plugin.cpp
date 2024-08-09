@@ -31,7 +31,7 @@
 #include <gazebo/sensors/Sensor.hh>
 #include <gazebo/sensors/SensorTypes.hh>
 #include <sdf/sdf.hh>
-#include <tf/tf.h>
+// #include <tf/tf.h>
 
 namespace gazebo {
 // Register this plugin with the simulator

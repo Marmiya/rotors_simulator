@@ -327,8 +327,7 @@ class GazeboRosInterfacePlugin : public WorldPlugin {
   void GzBroadcastTransformMsgCallback(
       GzTransformStampedWithFrameIdsMsgPtr& broadcast_transform_msg);
 
-  tf::Transform tf_;
-  tf::TransformBroadcaster transform_broadcaster_;
+  tf2_ros::TransformBroadcaster transform_broadcaster_;
 };
 
 }  // namespace gazebo

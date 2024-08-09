@@ -1031,23 +1031,22 @@ void GazeboRosInterfacePlugin::RosWindSpeedMsgCallback(
 
 void GazeboRosInterfacePlugin::GzBroadcastTransformMsgCallback(
     GzTransformStampedWithFrameIdsMsgPtr& broadcast_transform_msg) {
-  ros::Time stamp;
-  stamp.sec = broadcast_transform_msg->header().stamp().sec();
-  stamp.nsec = broadcast_transform_msg->header().stamp().nsec();
+    geometry_msgs::TransformStamped msg;
+    msg.header.stamp.sec = broadcast_transform_msg->header().stamp().sec();
+    msg.header.stamp.nsec = broadcast_transform_msg->header().stamp().nsec();
+    msg.header.frame_id = broadcast_transform_msg->parent_frame_id();
+    msg.child_frame_id = broadcast_transform_msg->child_frame_id();
 
-  tf::Quaternion tf_q_W_L(broadcast_transform_msg->transform().rotation().x(),
-                          broadcast_transform_msg->transform().rotation().y(),
-                          broadcast_transform_msg->transform().rotation().z(),
-                          broadcast_transform_msg->transform().rotation().w());
+    msg.transform.rotation.x = broadcast_transform_msg->transform().rotation().x();
+    msg.transform.rotation.y = broadcast_transform_msg->transform().rotation().y();
+    msg.transform.rotation.z = broadcast_transform_msg->transform().rotation().z();
+    msg.transform.rotation.w = broadcast_transform_msg->transform().rotation().w();
 
-  tf::Vector3 tf_p(broadcast_transform_msg->transform().translation().x(),
-                   broadcast_transform_msg->transform().translation().y(),
-                   broadcast_transform_msg->transform().translation().z());
+    msg.transform.translation.x = broadcast_transform_msg->transform().translation().x();
+    msg.transform.translation.y = broadcast_transform_msg->transform().translation().y();
+    msg.transform.translation.z = broadcast_transform_msg->transform().translation().z();
 
-  tf_ = tf::Transform(tf_q_W_L, tf_p);
-  transform_broadcaster_.sendTransform(tf::StampedTransform(
-      tf_, stamp, broadcast_transform_msg->parent_frame_id(),
-      broadcast_transform_msg->child_frame_id()));
+    transform_broadcaster_.sendTransform(msg);
 }
 
 GZ_REGISTER_WORLD_PLUGIN(GazeboRosInterfacePlugin);

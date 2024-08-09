@@ -7,6 +7,7 @@ find_package(Mavlink QUIET)
 
 if (Mavlink_DIR)
   message(STATUS "Building HIL_INTERFACE package.")
+  return()
 else ()
   message(STATUS "Mavlink not found. Skipping HIL_INTERFACE package.")
 
